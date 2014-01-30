@@ -247,9 +247,12 @@ abstract class ScalaFormatter extends HasFormattingPreferences with TypeFormatte
 
     def write(token: Token, replacementOption: Option[String] = None): Option[TextEdit] = {
       val rewriteArrows = formattingPreferences(RewriteArrowSymbols)
+      val rewriteArrowsBack = formattingPreferences(RewriteArrowSymbolsBack)
       val actualReplacementOption = replacementOption orElse (condOpt(token.tokenType) {
         case ARROW if rewriteArrows  ⇒ "⇒"
         case LARROW if rewriteArrows ⇒ "←"
+        case ARROW_UTF if rewriteArrowsBack ⇒ "=>"
+        case LARROW_UTF if rewriteArrowsBack ⇒ "<-"
         case EOF                     ⇒ ""
       })
       builder.append(actualReplacementOption getOrElse token.rawText)
@@ -426,7 +429,7 @@ object ScalaFormatter {
     RETURN, SEALED, /* SUPER, THIS, */
     THROW, TRAIT, TRY, /* TYPE ,*/
     VAL, VAR, WHILE, WITH, YIELD, 
-    /* USCORE, */ COLON, EQUALS, ARROW, LARROW, SUBTYPE, VIEWBOUND, SUPERTYPE, /* HASH, AT */
+    /* USCORE, */ COLON, EQUALS, ARROW, ARROW_UTF, LARROW, SUBTYPE, VIEWBOUND, SUPERTYPE, /* HASH, AT */
     LBRACE, SEMI)
 
   val ENSURE_SPACE_BEFORE = Set(

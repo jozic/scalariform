@@ -60,8 +60,8 @@ trait IntegerPreferenceDescriptor extends PreferenceDescriptor[Int] {
 }
 
 object AllPreferences {
-  val preferences: List[PreferenceDescriptor[_]] = List(RewriteArrowSymbols, IndentSpaces, SpaceBeforeColon, CompactStringConcatenation,
-    PreserveSpaceBeforeArguments, AlignParameters, DoubleIndentClassDeclaration, FormatXml, IndentPackageBlocks,
+  val preferences: List[PreferenceDescriptor[_]] = List(RewriteArrowSymbols, RewriteArrowSymbolsBack, IndentSpaces, SpaceBeforeColon,
+    CompactStringConcatenation, PreserveSpaceBeforeArguments, AlignParameters, DoubleIndentClassDeclaration, FormatXml, IndentPackageBlocks,
     AlignSingleLineCaseStatements, AlignSingleLineCaseStatements.MaxArrowIndent, IndentLocalDefs, PreserveDanglingCloseParenthesis,
     SpaceInsideParentheses, SpaceInsideBrackets, SpacesWithinPatternBinders, MultilineScaladocCommentsStartOnFirstLine, IndentWithTabs,
     CompactControlReadability, PlaceScaladocAsterisksBeneathSecondAsterisk)
@@ -78,6 +78,12 @@ object AllPreferences {
 case object RewriteArrowSymbols extends BooleanPreferenceDescriptor {
   val key = "rewriteArrowSymbols"
   val description = "Replace arrow tokens with unicode equivalents: => with ⇒, and <- with ←"
+  val defaultValue = false
+}
+
+case object RewriteArrowSymbolsBack extends BooleanPreferenceDescriptor {
+  val key = "rewriteArrowSymbolsBack"
+  val description = "Replace unicode arrow tokens with ASCII equivalents: ⇒ with =>, and ← with <-"
   val defaultValue = false
 }
 
